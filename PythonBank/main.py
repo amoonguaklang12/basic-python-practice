@@ -3,7 +3,8 @@ import os
 import csv
 
 # Path to csv file
-csvpath = os.path.join('.', 'Projects', 'basic-python-practice', 'PythonBank' ,'Resources', 'budget_data.csv')
+par_dir = os.path.dirname(os.path.abspath(__file__))
+csvpath = os.path.join(par_dir, "Resources", "budget_data.csv")
 
 # Reading data using csv module
 with open(csvpath, newline="") as csvfile:
@@ -38,15 +39,18 @@ with open(csvpath, newline="") as csvfile:
        
        last_row = row
 
-    # Writing Analysis to txt file
-    output_path = os.path.join('.', 'Projects', 'basic-python-practice', 'PythonBank', 'Analysis', 'analysis.txt')
+# Writing Analysis to txt file
+output_path = os.path.join('.', 'Projects', 'basic-python-practice', 'PythonBank', 'Analysis', 'analysis.txt')
+
+with open(output_path, 'w', newline='') as writer:
+    writer.write("Financial Analysis")
+    writer.write("\n" + "-" * 22)
+    writer.write("\nTotal Months: " + str(num_months))
+    writer.write("\nTotal: $" + str(net_total))
+    writer.write("\nAverage Change: $" + str(round(net_changes/(num_months-1), 2)))
+    writer.write("\nGreatest Increase in Profits: " + max_row[0] + " ($" + str(max_increase) + ")")
+    writer.write("\nGreatest Decrease in Profits: " + min_row[0] + " ($" + str(min_increase) + ")")
     
-    with open(output_path, 'w', newline='') as writer:
-        writer.write("Financial Analysis")
-        writer.write("\n" + "-" * 22)
-        writer.write("\nTotal Months: " + str(num_months))
-        writer.write("\nTotal: $" + str(net_total))
-        writer.write("\nAverage Change: $" + str(round(net_changes/(num_months-1), 2)))
-        writer.write("\nGreatest Increase in Profits: " + max_row[0] + " ($" + str(max_increase) + ")")
-        writer.write("\nGreatest Decrease in Profits: " + min_row[0] + " ($" + str(min_increase) + ")")
-    
+with open(output_path, "r") as textfile:
+    lines = textfile.read()
+    print(lines)
